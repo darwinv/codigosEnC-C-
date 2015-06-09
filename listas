@@ -1,0 +1,149 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+using namespace std;
+typedef struct nodo{
+    int x;
+    nodo *sig;
+}nodo;
+//listas
+ 
+void insertar(int ele,nodo **cab){
+    nodo *nuevo=NULL,*recor,*antes;
+    int sw=0;
+    nuevo=new(nodo);
+    if(nuevo){
+        nuevo->x=ele;
+        if(!(*cab)){
+            (*cab)=nuevo;
+            (*cab)->sig=NULL;
+        }
+        else{
+            if((*cab)->x > nuevo->x){
+                nuevo->sig=(*cab);
+                (*cab)=nuevo;
+            }
+            else{
+                recor=(*cab)->sig;
+                antes=(*cab);
+                while(recor && !sw){
+                    if(recor->x > nuevo->x)
+                        sw=1;
+                    else{
+                        antes=recor;
+                        recor=recor->sig;
+                    }
+                }
+                if(sw){
+                    nuevo->sig=recor;
+                    antes->sig=nuevo;
+                }
+                else{
+                    antes->sig=nuevo;
+                    nuevo->sig=NULL;
+                }
+            }
+        }
+    }
+    else{
+        cout<<"\n\tNo hay memoria";
+    }
+}
+void eliminar(nodo **cab,int a){
+    nodo *recor,*antes;
+    int sw=0;
+    if(!(*cab)){
+        cout<<"\n\tNo hay que eliminar";
+    }
+    else{
+        if((*cab)->x==a){
+            recor=(*cab);
+            (*cab)=(*cab)->sig;
+            free(recor);
+        }
+        else{
+            recor=(*cab)->sig;
+            antes=(*cab);
+            while(recor && !sw){
+                if(recor->x==a)
+                    sw=1;
+                else{
+                    antes=recor;
+                    recor=recor->sig;
+                }
+            }
+            if(sw){
+                antes->sig=recor->sig;
+                free(recor);
+            }
+            else
+                cout<<"\nNo encontrado";
+        }
+    }
+}
+void imprimir(nodo *cab){
+    nodo *aux;
+    int tt;
+    int c1=0,c2=0,c3=0,c4=0,c5=0;
+    if(!cab)
+        cout<<"\nLista vacia";
+    else{
+        aux=cab;
+        while(aux){
+            if (aux->x==1)
+                c1++;
+            if (aux->x==2)
+                c2++;
+            if (aux->x==3)
+                c3++;
+            if (aux->x==4)
+                c4++;
+            if (aux->x==5)
+                c5++;
+            aux=aux->sig;
+        }
+    }
+    tt=c1+c2+c3+c4+c5;
+    cout<<"\n\t total de equipos por reparar por prioridad 1: "<<c1;
+    cout<<"\n\t total de equipos por reparar por prioridad 2: "<<c2;
+    cout<<"\n\t total de equipos por reparar por prioridad 3: "<<c3;
+    cout<<"\n\t total de equipos por reparar por prioridad 4: "<<c4;
+    cout<<"\n\t total de equipos por reparar por prioridad 5: "<<c5;
+    cout<<"\n\t total de equipos por reparar "<<tt<<"\n\n";
+}
+void menu(int *w){
+    cout<<"\n\t1.- Agregar equipo a la lista";
+    cout<<"\n\t2.- Sacar equipo de la lista";
+    cout<<"\n\t3.- Generar estadisticas";
+    cout<<"\n\t4.- Salir\n\t";
+    cin>>*w;
+}
+ int main()
+{
+    nodo *f=NULL;
+    int v,m,z;
+    do{
+        menu(&m);
+        switch(m){
+            case 1:
+                cout<<"\n\tIngrese numero de prioridad (entre 1 y 5)";
+                cin>>v;
+                insertar(v,&f);
+                break;
+            case 2:
+                cout<<"\n\tIngrese valor a eliminar (entre 1 y 5)";
+                cin>>z;
+                eliminar(&f,z);
+               break;
+            case 3:
+              imprimir(f);
+             getch();
+             break;
+            }
+         
+    }while(m<=3);
+    return 0;
+}
