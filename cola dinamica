@@ -1,0 +1,122 @@
+//---------------------------------------------------------------------------
+ 
+#pragma hdrstop
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<ctime>
+#include <iostream>
+using namespace std;
+//---------------------------------------------------------------------------
+ 
+#pragma argsused
+typedef struct nodo{
+        int x;
+        nodo *sig;
+}nodo;
+//Daniel Useche C.I. 21341401
+//Genesis Torres C.I. 20424923
+//colas
+void insertar(int ele,nodo **fte,nodo **fin){
+        nodo *nuevo=NULL;
+        nuevo=new(nodo);
+        if(nuevo){
+                nuevo->x=ele;
+                if(!(*fin))
+                        (*fte)=nuevo;
+                else
+                        (*fin)->sig=nuevo;
+                (*fin)=nuevo;
+                nuevo->sig=NULL;
+        }
+        else{
+                cout<<"\n\tNo hay memoria";
+        }
+}
+void eliminar(nodo **fte,nodo **fin,nodo *dato){
+        nodo *aux;
+        if(!(*fte)){
+                cout<<"\n\tNo hay que eliminar";
+        }
+        else{
+                aux=(*fte);
+                (*fte)=(*fte)->sig;
+                (*dato)=(*aux);
+                free(aux);
+                if(!(*fte))
+                        (*fin)=NULL;
+        }
+}
+void imprimir(nodo *fte){
+        nodo *aux;
+        if(!fte)
+                cout<<"\n\tCola vacia";
+        else{
+                aux=fte;
+                while(aux){
+                        cout<<"\n\t\t\t"<<aux->x;
+                        aux=aux->sig;
+                }
+        }
+}
+void calcular(nodo *fte){
+    nodo *aux;
+    int c, acum;
+    float prom;
+    c=0;
+    acum=0;
+    if(!fte)
+        cout<<"\n\tCola vacia";
+    else{
+        aux=fte;
+        while(aux){
+            acum+=aux->x;
+            aux=aux->sig;
+            c++;
+        }
+        prom=acum/c;
+        cout<<"\n\tel promedio de valores es: "<<prom;
+        cout<<"\n\tValor total: "<<acum;
+    }
+}
+void menu (int *w){
+    system("cls");
+    cout<<"\n\tMenu de opciones";
+    cout<<"\n\n\t1.-Agregar";
+    cout<<"\n\n\t2.-Listar";
+    cout<<"\n\n\t3.-Extraer";
+    cout<<"\n\n\t4.-Calcular ";
+    cout<<"\n\n\t0.-Salir\n\t";
+    cin>>*w;
+}
+int main()
+{
+        nodo *f=NULL,*e=NULL,z;
+        int m;
+        float v;
+        do{
+            menu(&m);
+            switch(m){
+            case 1: 
+                    cout<<"inserte valor de tipo float : ";
+                    cin>>v;
+                    insertar(v,&f,&e);
+                    break;
+            case 2:     
+                    imprimir(f);
+                    getch();
+                    break;
+            case 3:
+                    eliminar(&f,&e,&z);
+                    cout<<"\n\t\t\tEliminado: "<<z.x;
+                    break;
+            case 4:
+                  calcular(f);
+                   getch();
+                  break;
+                }
+        }while(m!=0);
+        return 0;
+}
+ 
+//---------------------------------------------------------------------------
