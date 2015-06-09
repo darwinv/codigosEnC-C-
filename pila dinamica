@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+using namespace std;
+//---------------------------------------------------------------------------
+typedef struct nodo{
+        int x;
+        nodo *sig;
+}nodo;
+//pilas
+void insertar(int ele,nodo **tope){
+        nodo *nuevo=NULL;
+        nuevo=new(nodo);
+        if(nuevo){
+                nuevo->x=ele;
+                if(!(*tope))
+                        nuevo->sig=NULL;
+                else
+                        nuevo->sig=(*tope);
+                (*tope)=nuevo;
+        }
+        else{
+                cout<<"\n\tNo hay memoria";
+        }
+}
+void eliminar(nodo **tope,nodo *dato){
+        nodo *aux;
+        if(!(*tope)){
+                cout<<"\n\tNo hay que eliminar";
+        }
+        else{
+                aux=(*tope);
+                *dato=*aux;
+                (*tope)=(*tope)->sig;
+                free(aux);
+        }
+}
+void imprimir(nodo **tope){
+        nodo *aux;
+        if(!(*tope))
+                cout<<"\n\tPila vacia";
+        else{
+                aux=(*tope);
+                while(aux){
+                        cout<<"\n\t\t\t"<<aux->x;
+                        aux=aux->sig;
+                }
+        }
+}
+int main()
+{
+        nodo *top=NULL,z;
+        //randomize();
+        srand(time(NULL));
+        imprimir(&top);
+        for(int i=0;i<8;i++)
+                insertar(rand(),&top);
+        imprimir(&top);
+        for(int i=0;i<5;i++){
+                eliminar(&top,&z);
+                cout<<"\n\t\t\tEliminado: "<<z.x;
+ 
+        }
+        cout<<"\n\t\t\t-------";
+        imprimir(&top);
+        getch();
+        return 0;
+}
+ 
+//---------------------------------------------------------------------------
