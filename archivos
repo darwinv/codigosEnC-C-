@@ -1,0 +1,55 @@
+#include<stdio.h>
+#include<conio.h>
+#include<iostream>
+#include <cstdlib>
+#include <cstring>
+#include <fstream>
+using namespace std;
+struct {
+    char codigo [5];
+    char nombre[20];
+    char descripcion[30];
+    char cantidad[5];     
+    char fechavencimiento[35];
+    char pcompra[10];
+    char pventa[10];
+     
+}registro;
+ 
+int main()
+{
+    char compra[10],venta[10];
+    FILE *arch;
+    char res;
+    float in,v=3.f,c=.3f;
+    arch = fopen( "distribuidora.txt", "a" );
+    do {
+        printf( "Nombre del producto: " ); fflush(stdout);
+        cin>>registro.nombre;
+//      if (strcmp(registro.nombre,""))
+        {
+            printf( "Codigo " ); fflush(stdout);
+            cin>>registro.codigo;
+            printf( "Descripcion: " ); fflush(stdout);
+            cin>>registro.descripcion;
+            printf( "Cantidad: " ); fflush(stdout);
+            cin>>registro.cantidad;
+            printf( "Fecha de caducidad (dia/mes/año) " ); fflush(stdout);
+            cin>>registro.fechavencimiento;
+            printf( "Precio de compra: " ); fflush(stdout);
+            cin>>c;
+            //itoa (compra,precio_compra,10);
+            sprintf(compra,"%.4f", c);
+            strcpy(registro.pcompra,compra);
+            in=(c*0.23);
+            v=c+in;
+            //itoa (precioventa,precio_venta,10);
+            sprintf(venta,"%.4f",v);
+            strcpy(registro.pventa,venta);
+            fwrite(&registro, sizeof(registro), 1, arch );
+        }
+        printf("¿Desea continuar? si o no s/n");
+        cin>>res;
+    } while (res=='s');
+    fclose( arch);
+}
