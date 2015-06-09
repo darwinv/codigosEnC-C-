@@ -1,0 +1,140 @@
+TALLER MECAnica
+Combinacion de pilas y colas//---------------------------------------------------------------------------
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<ctime>
+#include <iostream>
+using namespace std;
+//---------------------------------------------------------------------------
+//pilas y colas
+void insertarpila(char ele,int *tope,char *v,int max){
+    if((*tope)==max-1)
+        cout<<"\n\tPila llena";
+    else{
+        (*tope)++;
+        v[(*tope)]=ele;
+    }
+}
+int eliminarpila(int *tope,char *v,char *ele){
+    int static atendidosmp;
+    if((*tope)==-1)
+        cout<<"\n\tPila vacia";
+    else{
+        atendidosmp++;
+        *ele=v[(*tope)];
+        (*tope)--;
+    }
+    return atendidosmp;
+}
+int imprimirpila(char *v,int *tope){
+    int i, poratendermp;
+    poratendermp=0;
+    if((*tope)!=-1){
+        for(i=(*tope);i>=0;i--){
+            if(v[i]=='x'){
+                poratendermp++;
+        } 
+        }
+    }   //cout<<"\n\t\t\t"<<v[i];
+    else{
+        cout<<"\n\tPila vacia";
+    }
+    return poratendermp;
+}
+void insertarcola(char ele,int *fin,int *fte,char *v,int max){
+    if((*fin)==max-1)
+        cout<<"\n\tCola llena";
+    else{
+        (*fin)++;
+        v[(*fin)]=ele;
+        if((*fte)==-1)
+            (*fte)++;
+    }
+}
+int  eliminarcola(int *fte,int *fin,char *v,char *ele){
+    int i;
+    int static atendidosml;
+    //atendidosml=0;
+    if((*fte)==-1)
+        cout<<"\n\tCola vacia";
+    else{
+        atendidosml++;
+        *ele=v[(*fte)];
+        for(i=0;i<(*fin);i++)
+            v[i]=v[i+1];
+        (*fin)--;
+        if((*fin)==-1)
+            (*fte)=-1;
+    }
+    return atendidosml;
+}
+int imprimircola(char *v,int fte,int fin){
+    int i,poratenderml;
+    poratenderml=0;
+    if(fte!=-1){
+        for(i=0;i<=fin;i++){
+            if(v[i]=='x'){
+                poratenderml++;
+            } 
+        }
+        //cout<<"c : "<<poratenderml;
+        //cout<<"\n\t\t\t"<<v[i];
+        }
+    else
+        cout<<"\n\tCola vacia";
+    return poratenderml;
+}
+ 
+void menu (int *w){
+    system("cls");
+    cout<<"\n\tMenu de opciones";
+    cout<<"\n\n\t1.-Ingresar Vehiculo MP";
+    cout<<"\n\n\t2.-Ingresar Vehiculo ML";
+    cout<<"\n\n\t3.-Sacar Vehiculo MP";
+    cout<<"\n\n\t4.-Sacar Vehiculo ML ";
+    cout<<"\n\n\t5.-Salir\n\t";
+    cin>>*w;
+}
+ 
+int main(){
+    int fte,fin,mc,top,mp,m;
+    top=fte=fin=-1;
+    mc=10;
+    mp=4;
+    char auxcola, auxpila;
+    char cola[10];
+    char pila[4];
+    char x='x';
+    int atendidoscola=0, atendidospila=0, poratendercola=0, poratenderpila=0;
+    //float v;
+    do{
+         
+        menu(&m);
+        switch (m){
+        case 1: 
+            insertarpila(x,&top,pila,mp);
+            break;
+        case 2: 
+            insertarcola(x,&fin,&fte,cola,mc);
+        break;
+        case 3:
+            atendidospila=eliminarpila(&top,pila,&auxpila);
+            break;
+        case 4:
+            atendidoscola=eliminarcola(&fte,&fin,cola,&auxcola);
+            break;
+        case 5: 
+            poratendercola=imprimircola(cola,fte,fin);
+            poratenderpila=imprimirpila(pila,&top);
+         
+            cout<<"\n Total de vehiculos atendidos por mecanica pesada: "<<atendidospila;
+            cout<<"\n Total de vehiculos atendidos por mecanica ligera: "<<atendidoscola;
+            cout<<"\n Total de vehiculos por atender mecanica pesada: "<<poratenderpila;
+            cout<<"\n Total de vehiculos por atender mecanica ligera: "<<poratendercola;
+            break;
+        }
+         
+    }while(m!=5);
+    return 0;
+}
