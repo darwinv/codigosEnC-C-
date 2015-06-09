@@ -1,0 +1,71 @@
+#include <iostream>
+#include <stdio.h>
+#include<conio.h>
+#include <stdlib.h>
+#include <ctime>
+using namespace std;
+     
+void menu(int *w);
+int main(int argc, char *argv[]) {
+    FILE *archivo;
+    char c,nom[15];
+    int r,d,i;
+    srand(time(NULL));
+    do{
+        menu(&r);
+        switch(r){
+            case 1:
+                cout<<"Ingrese el nombre del archivo: ";
+                cin>>nom;
+                fflush(stdin);
+                cout<<"Ingrese clave de lectura: ";
+                cin>>d;
+                fflush(stdin);
+                archivo = fopen(nom,"wt");
+                cout<<"\nIntrouce el mensaje: ";
+                while((c = getchar()) != '\n'){                 
+                    fputc(c,archivo);
+                    for(i=0;i<d;i++)
+                        fputc(rand () % (122-97+1) + 97,archivo);
+                }
+                fclose ( archivo );
+                break;
+            case 2:
+                system("cls");
+                cout<<"Ingrese el nombre del archivo: ";
+                cin>>nom;
+                fflush(stdin);
+                cout<<"Ingrese clave de lectura: ";
+                cin>>d;
+                fflush(stdin);
+                archivo = fopen(nom,"rt");
+                system("cls");
+                if (archivo == NULL){
+                    cout<<"\nError de apertura del archivo. \n\n";
+                }else{
+                    while (feof(archivo) == 0){
+                        c = fgetc(archivo);
+                        cout<<c;
+                        for(i=0;i<d;i++)
+                            c = fgetc(archivo);
+                    }
+                }
+                getch();
+                if(archivo != NULL)
+                    fclose(archivo);
+                break;          
+        }
+     
+     
+    }while(r!=3);
+    return 0;   
+}
+ 
+void menu(int *w){
+    system("cls");
+    fflush(stdin);
+    cout<<"\n\t1.- Generar Archivo";
+    cout<<"\n\t2.- Leer Archivo"; 
+    cout<<"\n\t3.- Salir\n\t\t\t";
+    cin>>*w;
+}
