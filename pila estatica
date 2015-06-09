@@ -1,0 +1,50 @@
+//Modelo simple de pila estatica---------------------------------------------------------------------------
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<ctime>
+#include <iostream>
+using namespace std;
+//---------------------------------------------------------------------------
+//pilas
+void insertar(int ele,int *tope,int *v,int max){
+        if((*tope)==max-1)
+                cout<<"\n\tPila llena";
+        else{
+                (*tope)++;
+                v[(*tope)]=ele;
+        }
+}
+void eliminar(int *tope,int *v,int *ele){
+        if((*tope)==-1)
+            cout<<"\n\tPila vacia";
+        else{
+                *ele=v[(*tope)];
+                (*tope)--;
+        }
+}
+void imprimir(int *v,int *tope){
+        int i;
+        if((*tope)!=-1)
+                for(i=(*tope);i>=0;i--)
+                        cout<<"\n\t\t\t"<<v[i];
+        else
+            cout<<"\n\tPila vacia";
+}
+int main()
+{
+        int vector[15],m,top,aux;
+        top=-1;
+        m=15;
+        srand (time(NULL));
+        //randomize();
+        imprimir(vector,&top);
+        for(int i=0;i<5;i++)
+                insertar(rand(),&top,vector,m);
+        imprimir(vector,&top);
+        eliminar(&top,vector,&aux);
+        cout<<"\n\t\t\t-------";
+        imprimir(vector,&top);
+        getch();
+        return 0;
+}
