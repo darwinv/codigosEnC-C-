@@ -1,0 +1,34 @@
+#include<stdio.h>
+#include<conio.h>
+#include<iostream>
+#include <cstdlib>
+#include <cstring>
+#include <fstream>
+using namespace std;
+ 
+struct productos{
+    char cant[5];
+    char cod[20],nombre[20],descripcion[50],fechaP[20];
+    float pv,pc;
+}stru;
+//void mostrar(FILE **ar);
+ 
+ 
+int main()
+{
+    //FILE *ARC;
+     
+    char caracter;
+    ifstream fin("distribuidora.txt");
+    string nombre, descripcion, fechap, cant, cod;
+    float pc,pv;
+     
+    fin >> cod >> nombre >> descripcion >> cant >> fechap >> pc >> pv;
+    //printf("\nLista de Productos \n\n");
+    //ARC=fopen("distribuidora.txt","r");
+    //while(fread(stru,sizeof(productos),1)){ 
+        cout<<"\n Listado de Productos  "<<cod <<nombre <<
+            descripcion<<cant<<fechap <<pc <<pv;                    
+    //}
+         
+}
